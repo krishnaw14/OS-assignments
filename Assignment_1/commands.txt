@@ -1,7 +1,1 @@
-echo "Hello world"
-ls
-pwd
-ps &
-sleep 5 && ls && pwd
-echo "hello" &&& sleep 10 
-exit
+Hi

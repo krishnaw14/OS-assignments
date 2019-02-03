@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <dirent.h> 
 
 #define MAX_INPUT_SIZE 1024
 #define MAX_TOKEN_SIZE 64
@@ -38,6 +39,49 @@ char **tokenize(char *line)
   return tokens;
 }
 
+// Terminal Command executions
+
+void execute_command(char** tokens){
+
+	if (strcmp(tokens[0], "cd") == 0){
+		char buf[1024];
+		// char* gdir, dir, to;
+
+		getcwd(buf, sizeof(buf));
+
+		strcat(buf, "/");
+
+		strcat(buf, tokens[1]);
+
+		int ret = chdir(buf);
+		// printf("55555 %i\n", ret);
+		if (ret != 0){
+			printf("Unable to change Directory\n");
+		}
+	}
+
+	
+	pid_t pid;
+	pid = fork();
+	if (pid < 0){
+		perror("Unable to form a child. \n");
+	}
+	else if (pid == 0){
+
+		int flag = execvp(tokens[0], tokens);
+					// int flag = execlp(tokens[i],tokens[i], NULL);
+		// printf("Flag is here \n");
+		if (flag < 0){
+			perror("Shell: Incorrect command.");
+		}
+	}
+	else{
+		wait(NULL);
+	}
+
+}
+
+
 
 int main(int argc, char* argv[]) {
 	char  line[MAX_INPUT_SIZE];            
@@ -46,8 +90,13 @@ int main(int argc, char* argv[]) {
 
 	char* echo = "echo";
 	char* pwd = "pwd";
+	char* ls = "ls";
+	char* cat = "cat";
+	char* sleep = "sleep";
+	char* ps = "ps";
+	char* commands[] = {echo, pwd, ls, sleep, cat, ps};
 
-	printf("Flag is here: %s \n", echo);
+	// printf("Flag is here: %s \n", echo);
 
 	FILE* fp;
 	if(argc == 2) {
@@ -71,32 +120,49 @@ int main(int argc, char* argv[]) {
 			scanf("%[^\n]", line);
 			getchar();
 		}
-		printf("Command entered: %s \n", line);
+		// printf("Command entered: %s \n", line);
 		/* END: TAKING INPUT */
-		// printf("Command Length: %lu \n", strlen(line));
+
 		line[strlen(line)] = '\n'; //terminate with new line
 		tokens = tokenize(line);
+		execute_command(tokens);
    
        //do whatever you want with the commands, here we just print them
 
-		for(i=0;tokens[i]!=NULL;i++){
-			printf("found token %s %s \n", tokens[i], echo);
+		// for(i=0;tokens[i]!=NULL;i++){
+		// 	// printf("found token %s \n", tokens[i]);
 
-			if (strcmp(tokens[i], echo) == 0){
-				printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-				// printf("Executing Echo: %s \n", tokens[i]);
-			}
+		// 	// int is_command = 0;
 
-			else if (strcmp(tokens[i], pwd) == 0){
-				// printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-				char cwd[1024];
-    			// chdir("/path/to/change/directory/to");
-    			getcwd(cwd, sizeof(cwd));
-    			printf("Current working dir: %s\n", cwd);
-				// printf("Executing Echo: %s \n", tokens[i]);
-			}
+		// 	// for (int j = 0; j < 3; j++){
+		// 	// 	if (strcmp(commands[j], tokens[i]) == 0){
+		// 	// 		is_command = 1;
+		// 	// 		break;
+		// 	// 	}
+		// 	// }
 
-		}
+		// 	// if (is_command == 0)
+		// 	// 	continue;
+
+		// 	pid_t pid;
+
+		// 	pid = fork();
+		// 	if (pid < 0){
+		// 		perror("Unable to form a child. \n");
+		// 	}
+		// 	else if (pid == 0){
+		// 		int flag = execvp(tokens[i], tokens);
+		// 			// int flag = execlp(tokens[i],tokens[i], NULL);
+		// 		printf("Flag is here \n");
+		// 		if (flag < 0){
+		// 			perror("Could not execute this command. Try Again. \n");
+		// 		}
+		// 	}
+		// 	else{
+		// 		wait(NULL);
+		// 	}
+
+		// }
        
 		// Freeing the allocated memory	
 		for(i=0;tokens[i]!=NULL;i++){
