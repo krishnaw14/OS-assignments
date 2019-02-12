@@ -1,9 +1,10 @@
-#include  <stdio.h>
-#include  <sys/types.h>
+#include <stdio.h>
+#include <sys/types.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <dirent.h> 
+#include <signal.h>
 
 #define MAX_INPUT_SIZE 1024
 #define MAX_TOKEN_SIZE 64
@@ -41,7 +42,7 @@ char **tokenize(char *line)
 
 // Terminal Command executions
 
-void execute_command(char** tokens){
+void execute_command(char** tokens, int command_index, int start_token, int if_background){
 
 	if (strcmp(tokens[0], "cd") == 0){
 		char buf[1024];
@@ -60,23 +61,27 @@ void execute_command(char** tokens){
 		}
 	}
 
-	
-	pid_t pid;
-	pid = fork();
-	if (pid < 0){
-		perror("Unable to form a child. \n");
-	}
-	else if (pid == 0){
+	else{
+		pid_t pid;
+		pid = fork();
+		if (pid < 0){
+			perror("Unable to form a child. \n");
+		}
+		else if (pid == 0){
 
-		int flag = execvp(tokens[0], tokens);
+			int flag = execvp(tokens[command_index], tokens + start_token);
 					// int flag = execlp(tokens[i],tokens[i], NULL);
 		// printf("Flag is here \n");
-		if (flag < 0){
-			perror("Shell: Incorrect command.");
+			if (flag < 0){
+				perror("Shell: Incorrect command.");
+			}
 		}
-	}
-	else{
-		wait(NULL);
+		else{
+			if (if_background == 0)
+				wait(NULL);
+			else
+				printf("To be executed in background \n");
+		}
 	}
 
 }
@@ -88,13 +93,8 @@ int main(int argc, char* argv[]) {
 	char  **tokens;              
 	int i;
 
-	char* echo = "echo";
-	char* pwd = "pwd";
-	char* ls = "ls";
-	char* cat = "cat";
-	char* sleep = "sleep";
-	char* ps = "ps";
-	char* commands[] = {echo, pwd, ls, sleep, cat, ps};
+	char* double_and = "&&";
+	char* single_and = "&";
 
 	// printf("Flag is here: %s \n", echo);
 
@@ -125,51 +125,109 @@ int main(int argc, char* argv[]) {
 
 		line[strlen(line)] = '\n'; //terminate with new line
 		tokens = tokenize(line);
-		execute_command(tokens);
-   
+
+		int if_execute = 1;
+   		
        //do whatever you want with the commands, here we just print them
+		int double_and_indices[32];
+		int double_and_flag = 0;
+		int max_len = 0;
+		int if_background = 0;
 
-		// for(i=0;tokens[i]!=NULL;i++){
-		// 	// printf("found token %s \n", tokens[i]);
+		for(i=0;tokens[i]!=NULL;i++){
+			// printf("found token %s \n", tokens[i]);
 
-		// 	// int is_command = 0;
+			// int is_command = 0;
 
-		// 	// for (int j = 0; j < 3; j++){
-		// 	// 	if (strcmp(commands[j], tokens[i]) == 0){
-		// 	// 		is_command = 1;
-		// 	// 		break;
-		// 	// 	}
+			// for (int j = 0; j < 3; j++){
+			// 	if (strcmp(commands[j], tokens[i]) == 0){
+			// 		is_command = 1;
+			// 		break;
+			// 	}
+			// }
+
+			// if (is_command == 0)
+			// 	continue;
+
+			// if (strcmp(tokens[i], "&&") == 0)
+			// 	if_execute = 0;
+
+			// if (if_execute == 1){
+
+			// }
+			max_len = max_len + 1;
+			if (strcmp(tokens[i], double_and) == 0){
+				printf("Found Something\n");
+				double_and_indices[double_and_flag] = i;
+				double_and_flag = double_and_flag + 1;
+			}
+			if (strcmp(tokens[i], single_and) == 0)
+				if_background = 1;
+
+	}
+	if (double_and_flag == 0){
+		execute_command(tokens, 0, 0, if_background);
+	}
+	else{
+		// double_and_indices[double_and_flag] = max_len;
+		// double_and_flag = double_and_flag + 1;
+		// int j, k, l, split_token_length;
+		// for(i = 0; i<double_and_flag; i++){
+
+		// 	if (i == 0)
+		// 		split_token_length = double_and_indices[i];
+		// 	else
+		// 		split_token_length = double_and_indices[i] - double_and_indices[i-1] - 1;
+
+		// 	char* split_tokens[64];
+		// 	k = 0;
+		// 	if (i == 0)
+		// 		j = 0;
+		// 	else
+		// 		j = double_and_indices[i-1]+1;
+		// 	while(j < double_and_indices[i]){
+		// 		split_tokens[k] = tokens[j];
+		// 		k = k + 1;
+		// 		j = j + 1;
+		// 	}
+		// 	// printf("Command to be executed (Command Length: %i): \n", split_token_length);
+			
+		// 	// for(l=0;l<split_token_length;l++){
+		// 	// 	printf("%s ", split_tokens[l]);
 		// 	// }
+		// 	// printf("\n");
 
-		// 	// if (is_command == 0)
-		// 	// 	continue;
-
-		// 	pid_t pid;
-
-		// 	pid = fork();
-		// 	if (pid < 0){
-		// 		perror("Unable to form a child. \n");
-		// 	}
-		// 	else if (pid == 0){
-		// 		int flag = execvp(tokens[i], tokens);
-		// 			// int flag = execlp(tokens[i],tokens[i], NULL);
-		// 		printf("Flag is here \n");
-		// 		if (flag < 0){
-		// 			perror("Could not execute this command. Try Again. \n");
-		// 		}
-		// 	}
-		// 	else{
-		// 		wait(NULL);
-		// 	}
-
+		// 	execute_command_foreground(split_tokens);
+		// 	// free(split_tokens);
 		// }
-       
-		// Freeing the allocated memory	
+
+		double_and_indices[double_and_flag] = max_len;
+		double_and_flag = double_and_flag + 1;
+		int j, split_token_length, k;
+
+		for(j = 0; j < double_and_flag; j++){
+			// char **split_tokens = (char **)malloc(64 * sizeof(char *));
+			// if (j == 0)
+			// 	memcpy(split_tokens, tokens, double_and_indices[i] * sizeof(char*));
+			// else
+			// 	memcpy(split_tokens, tokens+double_and_indices[i]+1, (double_and_indices[i] - double_and_indices[i-1] - 1) * sizeof(int));
+			if (j == 0)
+				execute_command(tokens, 0, 0, if_background);
+			else
+				execute_command(tokens, double_and_indices[j]+1, double_and_indices[j]+1, if_background);
+
+			// free(split_tokens);
+		}
+	}
+
+
+
+	// Freeing the allocated memory	
 		for(i=0;tokens[i]!=NULL;i++){
 			free(tokens[i]);
 		}
 		free(tokens);
-
 	}
+
 	return 0;
 }
