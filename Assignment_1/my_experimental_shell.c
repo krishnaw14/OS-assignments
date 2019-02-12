@@ -39,32 +39,32 @@ char **tokenize(char *line)
   return tokens;
 }
 
-char **tokenize_experimental(char *line)
-{
-  char **tokens = (char **)malloc(MAX_NUM_TOKENS * sizeof(char *));
-  char *token = (char *)malloc(MAX_TOKEN_SIZE * sizeof(char));
-  int i, tokenIndex = 0, tokenNo = 0;
+// char **tokenize_experimental(char *line)
+// {
+//   char **tokens = (char **)malloc(MAX_NUM_TOKENS * sizeof(char *));
+//   char *token = (char *)malloc(MAX_TOKEN_SIZE * sizeof(char));
+//   int i, tokenIndex = 0, tokenNo = 0;
 
-  for(i =0; i < strlen(line); i++){
+//   for(i =0; i < strlen(line); i++){
 
-    char readChar = line[i];
+//     char readChar = line[i];
 
-    if (readChar == '\n' || readChar == '\t' || readChar == '&'){
-      token[tokenIndex] = '\0';
-      if (tokenIndex != 0){
-	tokens[tokenNo] = (char*)malloc(MAX_TOKEN_SIZE*sizeof(char));
-	strcpy(tokens[tokenNo++], token);
-	tokenIndex = 0; 
-      }
-    } else {
-      token[tokenIndex++] = readChar;
-    }
-  }
+//     if (readChar == '\n' || readChar == '\t' || readChar == '&'){
+//       token[tokenIndex] = '\0';
+//       if (tokenIndex != 0){
+// 	tokens[tokenNo] = (char*)malloc(MAX_TOKEN_SIZE*sizeof(char));
+// 	strcpy(tokens[tokenNo++], token);
+// 	tokenIndex = 0; 
+//       }
+//     } else {
+//       token[tokenIndex++] = readChar;
+//     }
+//   }
  
-  free(token);
-  tokens[tokenNo] = NULL ;
-  return tokens;
-}
+//   free(token);
+//   tokens[tokenNo] = NULL ;
+//   return tokens;
+// }
 
 void execute_command(char** tokens){
 
@@ -246,7 +246,7 @@ int main(int argc, char* argv[]) {
 
 		else if (is_triple_and != 0)
 		{
-			printf("Found triple and\n");
+			// printf("Found triple and\n");
 			// tokens = tokenize_experimental(line);
 			int num_processes = is_triple_and + 1;
 			pid_t pid;
@@ -291,27 +291,35 @@ int main(int argc, char* argv[]) {
 
 		// }
 		else{
-		tokens = tokenize_experimental(line);
 
-		for(i=0;tokens[i]!=NULL;i++){
-			// printf("found token %c of length (%lu) \n\n\n", tokens[i][0], strlen(tokens[i]));
-			real_tokens = tokenize(tokens[i]);
-			for(k=0;real_tokens[k]!=NULL;k++){
-			// printf("Found Real Token: %s \n", real_tokens[k]);
-			}
-			execute_command(real_tokens);
+		char* tokens_split = strtok(line, "&&");
 
-			// printf("Freeing the real token !!!!!\n");
-			for (j=0; real_tokens[j]!=NULL;j++){
-				// printf("Real Token = %s  ", real_tokens[j]);
-				free(real_tokens[j]);
-				// printf("Freed!!!!!!!!!!!!\n");
-			}
-			// printf("Freeing Array.   ");
-			free(real_tokens);
-			// printf("Freed Array !!!!!\n");
-			// printf("found token %s\n", tokens[i]);
+		while(tokens_split!=NULL){
+			tokens = tokenize(tokens_split);
+			execute_command(tokens);
+
+			tokens_split = strtok(NULL, "&&");
 		}
+
+		// for(i=0;tokens[i]!=NULL;i++){
+		// 	// printf("found token %c of length (%lu) \n\n\n", tokens[i][0], strlen(tokens[i]));
+		// 	real_tokens = tokenize(tokens[i]);
+		// 	for(k=0;real_tokens[k]!=NULL;k++){
+		// 	// printf("Found Real Token: %s \n", real_tokens[k]);
+		// 	}
+		// 	execute_command(real_tokens);
+
+		// 	// printf("Freeing the real token !!!!!\n");
+		// 	for (j=0; real_tokens[j]!=NULL;j++){
+		// 		// printf("Real Token = %s  ", real_tokens[j]);
+		// 		free(real_tokens[j]);
+		// 		// printf("Freed!!!!!!!!!!!!\n");
+		// 	}
+		// 	// printf("Freeing Array.   ");
+		// 	free(real_tokens);
+		// 	// printf("Freed Array !!!!!\n");
+		// 	// printf("found token %s\n", tokens[i]);
+		// }
 	}
        
 		// Freeing the allocated memory	
