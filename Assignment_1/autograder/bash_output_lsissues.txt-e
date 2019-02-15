@@ -1,0 +1,62 @@
+-rw-r--r--  1 krishna  staff      0 Feb 15 23:44 bash_output_cd.txt
+-rw-r--r--  1 krishna  staff   2316 Feb 15 23:47 bash_output_ls.txt-e
+-rw-r--r--  1 krishna  staff      0 Feb 15 23:47 bash_output_lsissues.txt
+-rw-r--r--  1 krishna  staff   2281 Feb 15 23:44 bash_output_lsissues.txt-e
+-rw-r--r--  1 krishna  staff      0 Feb 15 23:42 bash_output_pwd.txt
+-rwxrwxrwx  1 krishna  staff     34 Feb 15 23:47 bash_test_part_a.txt
+-rwxr-xr-x  1 krishna  staff  14084 Feb 15 23:44 m
+-rwxr-xr-x@ 1 krishna  staff    137 Feb 15 22:47 master.sh
+-rwxr-xr-x  1 krishna  staff  14036 Feb 15 23:02 my_shell
+-rw-r--r--@ 1 krishna  staff   7283 Feb 15 23:46 my_shell.c
+-rw-r--r--  1 krishna  staff     42 Feb 15 23:44 part_a_student_output_cd.txt
+-rw-r--r--  1 krishna  staff     26 Feb 15 23:42 part_a_student_output_cd.txt-e
+-rw-r--r--  1 krishna  staff      9 Feb 15 23:42 part_a_student_output_date.txt-e
+-rw-r--r--  1 krishna  staff     10 Feb 15 23:42 part_a_student_output_echo.txt-e
+-rw-r--r--  1 krishna  staff      0 Feb 15 23:47 part_a_student_output_exit.txt
+-rw-r--r--  1 krishna  staff   2316 Feb 15 23:47 part_a_student_output_ls.txt-e
+-rw-r--r--  1 krishna  staff      0 Feb 15 23:47 part_a_student_output_ls_issues.txt
+-rw-r--r--  1 krishna  staff   2307 Feb 15 23:44 part_a_student_output_ls_issues.txt-e
+-rw-r--r--  1 krishna  staff      0 Feb 15 23:42 part_a_student_output_pwd.txt
+-rw-r--r--  1 krishna  staff     36 Feb 15 23:42 part_a_student_output_pwd.txt-e
+-rw-r--r--  1 krishna  staff     45 Feb 15 23:42 partb_test3.txt
+-rw-r--r--  1 krishna  staff     45 Feb 15 23:42 partb_test4.txt
+-rw-r--r--  1 krishna  staff     26 Feb 15 23:42 partb_testop4.txt-e
+-rw-r--r--@ 1 krishna  staff    416 Feb 12 11:09 readme.txt
+-rwxr-xr-x@ 1 krishna  staff   7044 Feb 15 23:22 script-a.sh
+-rwxr-xr-x@ 1 krishna  staff   4021 Feb 15 17:27 script-b.sh
+-rwxr-xr-x@ 1 krishna  staff   5541 Feb 15 16:56 script-c.sh
+-rwxr-xr-x  1 krishna  staff  14036 Feb 15 23:47 sshell
+drwxr-xr-x  2 krishna  staff     64 Feb 15 23:44 testing
+m
+master.sh
+my_shell
+my_shell.c
+partb_test3.txt
+partb_test4.txt
+partb_testop4.txt-e
+readme.txt
+script-a.sh
+script-b.sh
+script-c.sh
+sshell
+testing
+m
+master.sh
+my_shell
+my_shell.c
+partb_test3.txt
+partb_test4.txt
+partb_testop4.txt-e
+readme.txt
+script-a.sh
+script-b.sh
+script-c.sh
+sshell
+testing
+m					master.sh
+my_shell				my_shell.c
+partb_test3.txt				partb_test4.txt
+partb_testop4.txt-e			readme.txt
+script-a.sh				script-b.sh
+script-c.sh				sshell
+testing
