@@ -15,3 +15,5 @@ The shell had the following features:
 - Executions of commands in parallel in foreground if commands are separated by &&&
 - Signal handling for sigint signal to kill the executing foreground processes but not the background processes
 - exit command implemented to kill the background processes and exit the shell
+
+Cases involving a combination of &, && and &&& are not considered.
