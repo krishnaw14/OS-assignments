@@ -17,3 +17,5 @@ The shell had the following features:
 - exit command implemented to kill the background processes and exit the shell
 
 Cases involving a combination of &, && and &&& are not considered.
+
+## Assignment 2: Dynamic memory management
