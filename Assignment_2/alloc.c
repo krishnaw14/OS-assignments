@@ -7,6 +7,20 @@
 int init()
 {
 	// Write your code below
+	int i;
+
+	page_memory = (char*)mmap(NULL, PAGESIZE, PROT_READ|PROT_WRITE, MAP_ANON|MAP_SHARED, -1, 0);
+
+	// Intialize memory manager
+
+	// total_memory_occupied = 0;
+	// number_of_allocations = 0;
+	// for(i = 0; i<512; i++)
+	// {
+	// 	address_array[i] = NULL;
+	// 	memory_size_array[i] = 0;
+	// }
+
 
   
 }
@@ -19,7 +33,12 @@ int cleanup()
 
 	// Write your code below
 
-  
+	int flag = munmap(page_memory, PAGESIZE);
+	if (flag<0)
+		printf("Error in cleanup!\n");
+
+	// Reinitialize memory manager
+
 }
 
 /* Function to allocate memory of given size
@@ -30,8 +49,10 @@ int cleanup()
 char *alloc(int bufSize)
 {
 	// write your code below
-
+	if (bufSize % MINALLOC != 0)
+		return NULL;
   
+  	
 
 }
 
@@ -42,5 +63,14 @@ char *alloc(int bufSize)
 void dealloc(char *memAddr)
 {
 	// write your code below
+	size_t length;
+
+	// Get length from the data structure defined
+	int flag = munmap(memAddr, length);
+
+	if (flag < 0)
+	{
+		printf("Error in Deallocation!\n");
+	}
 
 }

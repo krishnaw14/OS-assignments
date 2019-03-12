@@ -9,6 +9,14 @@
 
 // You can declare any data structures required here
 
+//Declaring some global variables
+int total_memory_occupied;
+int number_of_allocations;
+char* address_array[512];
+size_t memory_size_array[512];
+
+char* page_memory;
+
 
 // function declarations
 int init();
