@@ -10,13 +10,16 @@
 // You can declare any data structures required here
 
 //Declaring some global variables
-int total_memory_occupied;
-int number_of_allocations;
-char* address_array[512];
-size_t memory_size_array[512];
+int total_memory_available;
+int total_allocations;
 
-char* page_memory;
+char* free_address_list[512];
+int free_memory_list[512];
 
+char* occupied_address_list[512];
+int occupied_memory_list[512];
+
+char* page_memory_address;
 
 // function declarations
 int init();
