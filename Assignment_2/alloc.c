@@ -16,14 +16,16 @@ int init()
 		free_address_list[i] = NULL;
 		free_memory_list[i] = 0;
 
-		occupied_address_list = NULL;
-		occupied_memory_list = 0;
+		occupied_address_list[i] = NULL;
+		occupied_memory_list[i] = 0;
 	}
 	free_address_list[0] = page_memory_address;
 	free_memory_list[0] = 4096;
 
 	total_memory_available = 4096;
 	total_allocations = 0;
+
+	return 0;
   
 }
 
@@ -40,13 +42,13 @@ int cleanup()
 		free_address_list[i] = NULL;
 		free_memory_list[i] = 0;
 
-		occupied_address_list = NULL;
-		occupied_memory_list = 0;
+		occupied_address_list[i] = NULL;
+		occupied_memory_list[i] = 0;
 	}
 	total_memory_available = 4096;
 	total_allocations = 0;
 
-	int flag = munmap(page_memory, PAGESIZE);
+	int flag = munmap(page_memory_address, PAGESIZE);
 	// if (flag<0)
 	// 	printf("Error in cleanup!\n");
 	return flag;
@@ -101,6 +103,7 @@ char *alloc(int bufSize)
 /* Function to free the memory
 * argument: takes the starting address of an allocated buffer
 */
+
 void dealloc(char *memAddr)
 {
 	// write your code below
