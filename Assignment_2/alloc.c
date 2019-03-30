@@ -67,7 +67,7 @@ char *alloc(int bufSize)
 	if (bufSize % MINALLOC != 0 || total_memory_available <= 8)
 		return NULL;
   	
-  	int i;
+  	int i,j;
   	char* return_address;
 
   	// Get return address, update total available memory and update free list
@@ -129,6 +129,7 @@ void dealloc(char *memAddr)
 			break;
 		}
 	}
+
 
 	// Update Occupied List
 	for(i = 0; i< 512; i++)
