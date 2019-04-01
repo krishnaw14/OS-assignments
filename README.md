@@ -30,7 +30,9 @@ Following 4 functions were implemented:
 - `alloc(int)`: returns a char* pointer to a buffer within the page of size passed as argument. Only allocations of 8 bytes are considered.
 - `alloc(char*)`:  takes a pointer to a previously allocated memory chunk, and frees up the entire chunk.
 
-## Assignment 2: Worker Thread Pool
+## Assignment 3: Worker Thread Pool
 
 The goal of this assignment was to implement a master and worker pool using multithreaded programming. The master produces
 numbers continuously which is consumerd by the workers synchronously. 
+
+Two scripts were developed `master-worker-array.c` and `master-worker-ll.c` which use fixed size array and dynamically updating linked list respectively in order to store the numbers in a shared buffer which is accessed by the master and worker threads. 
