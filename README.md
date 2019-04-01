@@ -23,9 +23,14 @@ Cases involving a combination of &, && and &&& are not considered.
 The goal of this assignment was to build a custom memory manager to allocate memory dynamically in a program. Specifically, I implemented functions to allocate and free memory, that act as replacements for C
 library functions like malloc and free. 
 
-Followinng 4 functions were implemented:
+Following 4 functions were implemented:
 
 - `init()`: Intialized the memory manager and allocated a 4KB page from OS via mmap system call. 
 - `cleanup()`: cleaned up state of the manager, and returned the memory mapped page back to the OS. 
 - `alloc(int)`: returns a char* pointer to a buffer within the page of size passed as argument. Only allocations of 8 bytes are considered.
 - `alloc(char*)`:  takes a pointer to a previously allocated memory chunk, and frees up the entire chunk.
+
+## Assignment 2: Worker Thread Pool
+
+The goal of this assignment was to implement a master and worker pool using multithreaded programming. The master produces
+numbers continuously which is consumerd by the workers synchronously. 
