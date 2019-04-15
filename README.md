@@ -32,7 +32,6 @@ Following 4 functions were implemented:
 
 ## Assignment 3: Worker Thread Pool
 
-The goal of this assignment was to implement a master and worker pool using multithreaded programming. The master produces
-numbers continuously which is consumerd by the workers synchronously. 
+The goal of this assignment was to implement a master and worker pool using multithreaded programming. A master thread produces numbers which are consumerd by the workers while ensuring synchronisation and mutual exclusion between the threads.
 
-Two scripts were developed `master-worker-array.c` and `master-worker-ll.c` which use fixed size array and dynamically updating linked list respectively in order to store the numbers in a shared buffer which is accessed by the master and worker threads. 
+Two scripts were developed: `master-worker-array.c` and `master-worker-ll.c` which use fixed size array and dynamically updating linked list respectively in order to store the numbers in a shared buffer which is accessed by the master and worker threads. 
