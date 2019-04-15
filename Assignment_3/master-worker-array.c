@@ -91,7 +91,7 @@ void *consume_requests_loop(void* data)
   		return 0;
   	}
 
-  	while(count==0)
+  	while(count==0 && requests_processed!=total_items)
   		pthread_cond_wait(&fill, &mutex);
 
   	int consumed_number = buffer[use_index];
