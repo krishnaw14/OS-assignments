@@ -52,6 +52,7 @@ void *generate_requests_loop(void *data)
       pthread_cond_broadcast(&fill);
       pthread_mutex_unlock(&mutex);
     } 
+    return 0;
 }
 
 void *consume_requests_loop(void* data)
@@ -123,7 +124,7 @@ int main(int argc, char *argv[])
   int worker_thread_ids[num_workers];
   pthread_t worker_threads[num_workers];
   for(i=0;i<num_workers;i++)
-  	worker_thread_ids[i] = i*100+10;
+  	worker_thread_ids[i] = i*10+10;
 
   //create master producer thread
   pthread_create(&master_thread, NULL, generate_requests_loop, (void *)&master_thread_id);
@@ -144,7 +145,7 @@ int main(int argc, char *argv[])
 
   //deallocate and free up any memory you allocated
   free(buffer);
-  pthread_exit(NULL);
+  // pthread_exit(NULL);
   
   return 0;
 }
