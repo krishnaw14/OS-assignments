@@ -1,5 +1,5 @@
 # OS-assignments
-Assignments done as part of Operating Systems Course (CS 347)
+Assignments done as part of Operating Systems Course (CS 347). Complete Problem Statement of each assignment is present in the respective folders.
 
 ## Assignment 1: Shell Implementation
 
